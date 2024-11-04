@@ -75,7 +75,7 @@
         let allGames = [];
         let ratedGames = [];
 
-        fetch('Switchgame.json')
+        fetch('./Switchgame.json')
             .then(response => response.json())
             .then(gamesJson => {
                 allGames = gamesJson;
