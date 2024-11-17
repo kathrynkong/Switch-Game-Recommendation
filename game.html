@@ -23,10 +23,6 @@
         let doorZones = [];
         let message = "";
         let messageTimer = 0;
-        let choices = [];
-        let points = 0;
-        let glowingBall;
-        let showGlowingBall = false;
 
         function preload() {
             catImage = loadImage('cat.png');
@@ -84,23 +80,6 @@
                 displayMessage(message);
                 messageTimer--;
             }
-
-            // Display choices if present
-            if (choices.length > 0) {
-                displayChoices();
-            }
-
-            // Display glowing ball if active
-            if (showGlowingBall) {
-                fill(255, 255, 0);
-                ellipse(glowingBall.x, glowingBall.y, 50);
-            }
-
-            // Display points
-            fill(0);
-            textSize(24);
-            textAlign(LEFT, TOP);
-            text(`Points: ${points}`, 10, 10);
         }
 
         function isMouseOverZone(zone) {
@@ -117,11 +96,6 @@
                             break;
                         case 1:
                             message = "Chase the ball, and the Enchanted Forest will open its heart to you.";
-                            choices = [
-                                "Play with the Ball",
-                                "Ask About the Forest",
-                                "Pet the Cat"
-                            ];
                             break;
                         case 2:
                             message = "The stars whisper their secrets to me. Prove you understand their song, and the Starry Abyss shall be yours.";
@@ -147,39 +121,6 @@
                     messageTimer = 180; // Display message for 3 seconds
                 }
             }
-
-            // Handle clicking on choices
-            for (let i = 0; i < choices.length; i++) {
-                let choiceY = height / 2 + 100 + i * 40;
-                if (mouseX > width / 2 - 200 && mouseX < width / 2 + 200 && mouseY > choiceY - 20 && mouseY < choiceY + 20) {
-                    handleChoice(choices[i]);
-                }
-            }
-
-            // Handle clicking on glowing ball
-            if (showGlowingBall && dist(mouseX, mouseY, glowingBall.x, glowingBall.y) < 25) {
-                points += 10;
-                showGlowingBall = false;
-            }
-        }
-
-        function handleChoice(choice) {
-            switch (choice) {
-                case "Play with the Ball":
-                    message = "Ginger bats a glowing ball toward you, her eyes sparkling with excitement.";
-                    glowingBall = { x: width / 2, y: 100 };
-                    showGlowingBall = true;
-                    break;
-                case "Ask About the Forest":
-                    message = "The Enchanted Forest is full of secrets. Bring me a golden leaf, and I might tell you more.";
-                    break;
-                case "Pet the Cat":
-                    message = "The cat purrs loudly, leaning into your touch. \"Hmm, you know how to treat royalty! Maybe I’ll help you on your journey.\"";
-                    points += 5;
-                    break;
-            }
-            messageTimer = 180;
-            choices = [];
         }
 
         function displayCoordinates() {
@@ -209,19 +150,6 @@
     textWrap(WORD);
     text(msg, textX - boxWidth / 2 + boxPadding, textY, boxWidth - boxPadding * 2);
 }
-
-        function displayChoices() {
-            for (let i = 0; i < choices.length; i++) {
-                let choiceY = height / 2 + 100 + i * 40;
-                fill(200);
-                rectMode(CENTER);
-                rect(width / 2, choiceY, 400, 30);
-                fill(0);
-                textSize(20);
-                textAlign(CENTER, CENTER);
-                text(choices[i], width / 2, choiceY);
-            }
-        }
     </script>
 </body>
 </html>
