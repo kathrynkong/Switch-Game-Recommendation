@@ -21,6 +21,8 @@
         let catImage;
         let catZones = [];
         let doorZones = [];
+        let message = "";
+        let messageTimer = 0;
 
         function preload() {
             catImage = loadImage('cat.png');
@@ -72,6 +74,12 @@
 
             // Display mouse coordinates
             displayCoordinates();
+
+            // Display message if present
+            if (messageTimer > 0) {
+                displayMessage(message);
+                messageTimer--;
+            }
         }
 
         function isMouseOverZone(zone) {
@@ -82,13 +90,35 @@
             // Handle mouse click interactions
             for (let i = 0; i < catZones.length; i++) {
                 if (isMouseOverZone(catZones[i])) {
-                    console.log(`Cat ${i + 1} clicked!`);
+                    switch (i) {
+                        case 0:
+                            message = "Bring me the shimmer of the cosmos, and I shall grant you the Sky Palace's secret.";
+                            break;
+                        case 1:
+                            message = "Chase the ball, and the Enchanted Forest will open its heart to you.";
+                            break;
+                        case 2:
+                            message = "The stars whisper their secrets to me. Prove you understand their song, and the Starry Abyss shall be yours.";
+                            break;
+                    }
+                    messageTimer = 180; // Display message for 3 seconds
                 }
             }
 
             for (let i = 0; i < doorZones.length; i++) {
                 if (isMouseOverZone(doorZones[i])) {
-                    console.log(`Door ${i + 1} clicked!`);
+                    switch (i) {
+                        case 0:
+                            message = "Only those who catch the falling stars may enter the Sky Palace. Dare to chase the light of the heavens?";
+                            break;
+                        case 1:
+                            message = "Follow the glow into the Enchanted Forest. Only those with the courage to uncover the truth may pass.";
+                            break;
+                        case 2:
+                            message = "Answer the riddle to unlock the Starry Abyss. What shines in the darkness but can never be held?";
+                            break;
+                    }
+                    messageTimer = 180; // Display message for 3 seconds
                 }
             }
         }
@@ -105,6 +135,14 @@
             textSize(48);
             textAlign(CENTER, CENTER);
             text(name, width / 2, height / 2);
+        }
+
+        function displayMessage(msg) {
+            fill(255, 255, 0);
+            textSize(32);
+            textAlign(CENTER, CENTER);
+            textStyle(BOLD);
+            text(msg, width / 2, height / 2 + 100);
         }
     </script>
 </body>
