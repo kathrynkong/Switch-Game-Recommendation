@@ -138,11 +138,32 @@
         }
 
         function displayMessage(msg) {
-            fill(255, 255, 0);
-            textSize(32);
+            let boxPadding = 20;
+            let boxWidth = 600;
+            let boxHeight = 150;
+            let textX = width / 2;
+            let textY = height / 2 + 100;
+
+            if (msg.includes("Cat")) {
+                fill(255, 255, 255, 200);
+                stroke(0);
+                strokeWeight(4);
+                rectMode(CENTER);
+                rect(textX, textY, boxWidth, boxHeight, 20); // Draw dialog box with rounded corners
+            } else {
+                fill(255, 255, 200, 200);
+                stroke(0);
+                strokeWeight(4);
+                rectMode(CENTER);
+                rect(textX, textY, boxWidth, boxHeight, 20); // Draw box for doors with rounded corners
+            }
+
+            fill(0);
+            textSize(28);
             textAlign(CENTER, CENTER);
             textStyle(BOLD);
-            text(msg, width / 2, height / 2 + 100);
+            textWrap(WORD);
+            text(msg, textX - boxWidth / 2 + boxPadding, textY - boxHeight / 2 + boxPadding, boxWidth - boxPadding * 2);
         }
     </script>
 </body>
