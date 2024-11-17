@@ -47,20 +47,26 @@
             fill(255, 100, 150);
             noStroke();
 
+            let catZoneHighlighted = false;
+
             // Highlight interaction zones on mouseover and display zone names
             for (let zone of catZones) {
                 if (isMouseOverZone(zone)) {
                     fill(255, 200, 200, 150);
                     rect(zone.x, zone.y, zone.w, zone.h);
                     displayZoneName(zone.name);
+                    catZoneHighlighted = true;
                 }
             }
 
-            for (let zone of doorZones) {
-                if (isMouseOverZone(zone)) {
-                    fill(200, 255, 200, 150);
-                    rect(zone.x, zone.y, zone.w, zone.h);
-                    displayZoneName(zone.name);
+            // Only display door zones if no cat zone is highlighted
+            if (!catZoneHighlighted) {
+                for (let zone of doorZones) {
+                    if (isMouseOverZone(zone)) {
+                        fill(200, 255, 200, 150);
+                        rect(zone.x, zone.y, zone.w, zone.h);
+                        displayZoneName(zone.name);
+                    }
                 }
             }
 
