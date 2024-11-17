@@ -197,18 +197,18 @@
         }
 
         function displayMessage(msg) {
-            let boxPadding = 20;
-            let boxWidth = 700;
-            let textX = width / 2;
-            let textY = height / 2;
+    let boxPadding = 20;
+    let boxWidth = 700;
+    let textX = width / 2;
+    let textY = height / 2;
 
-            fill(255, 255, 0);
-            textSize(32);
-            textAlign(CENTER, CENTER);
-            textStyle(BOLD);
-            textWrap(WORD);
-            text(msg, textX - boxWidth / 2 + boxPadding, textY, boxWidth - boxPadding * 2);
-        }
+    fill(255, 255, 0);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textWrap(WORD);
+    text(msg, textX - boxWidth / 2 + boxPadding, textY, boxWidth - boxPadding * 2);
+}
 
         function displayChoices() {
             for (let i = 0; i < choices.length; i++) {
