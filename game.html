@@ -32,14 +32,14 @@
             canvas.style('display', 'block'); // To ensure the canvas is centered
 
             // Define interaction zones for cats (x, y, width, height)
-            catZones.push({ x: 200, y: 700, w: 100, h: 100 }); // Left cat
-            catZones.push({ x: 450, y: 700, w: 100, h: 100 }); // Middle cat
-            catZones.push({ x: 700, y: 700, w: 100, h: 100 }); // Right cat
+            catZones.push({ x: 200, y: 700, w: 100, h: 100, name: 'Left Cat' }); // Left cat
+            catZones.push({ x: 450, y: 700, w: 100, h: 100, name: 'Middle Cat' }); // Middle cat
+            catZones.push({ x: 700, y: 700, w: 100, h: 100, name: 'Right Cat' }); // Right cat
 
             // Define interaction zones for doors (x, y, width, height)
-            doorZones.push({ x: 100, y: 200, w: 200, h: 400 }); // Left door
-            doorZones.push({ x: 400, y: 200, w: 200, h: 400 }); // Middle door
-            doorZones.push({ x: 700, y: 200, w: 200, h: 400 }); // Right door
+            doorZones.push({ x: 100, y: 200, w: 200, h: 400, name: 'Left Door' }); // Left door
+            doorZones.push({ x: 400, y: 200, w: 200, h: 400, name: 'Middle Door' }); // Middle door
+            doorZones.push({ x: 700, y: 200, w: 200, h: 400, name: 'Right Door' }); // Right door
         }
 
         function draw() {
@@ -47,11 +47,12 @@
             fill(255, 100, 150);
             noStroke();
 
-            // Highlight interaction zones on mouseover
+            // Highlight interaction zones on mouseover and display zone names
             for (let zone of catZones) {
                 if (isMouseOverZone(zone)) {
                     fill(255, 200, 200, 150);
                     rect(zone.x, zone.y, zone.w, zone.h);
+                    displayZoneName(zone.name);
                 }
             }
 
@@ -59,6 +60,7 @@
                 if (isMouseOverZone(zone)) {
                     fill(200, 255, 200, 150);
                     rect(zone.x, zone.y, zone.w, zone.h);
+                    displayZoneName(zone.name);
                 }
             }
 
@@ -86,10 +88,17 @@
         }
 
         function displayCoordinates() {
+            fill(255);
+            textSize(24);
+            textAlign(LEFT, TOP);
+            text(`x: ${mouseX}, y: ${mouseY}`, mouseX + 10, mouseY + 10);
+        }
+
+        function displayZoneName(name) {
             fill(0);
-            textSize(16);
-            textAlign(LEFT, BOTTOM);
-            text(`x: ${mouseX}, y: ${mouseY}`, 10, height - 10);
+            textSize(48);
+            textAlign(CENTER, CENTER);
+            text(name, width / 2, height / 2);
         }
     </script>
 </body>
