@@ -18,8 +18,9 @@
 </head>
 <body>
     <script>
-        let circleSize = 50;
         let catImage;
+        let catZones = [];
+        let doorZones = [];
 
         function preload() {
             catImage = loadImage('cat.png');
@@ -29,12 +30,56 @@
             let canvas = createCanvas(1000, 1000);
             canvas.parent(document.body);
             canvas.style('display', 'block'); // To ensure the canvas is centered
+
+            // Define interaction zones for cats (x, y, width, height)
+            catZones.push({ x: 200, y: 700, w: 100, h: 100 }); // Left cat
+            catZones.push({ x: 450, y: 700, w: 100, h: 100 }); // Middle cat
+            catZones.push({ x: 700, y: 700, w: 100, h: 100 }); // Right cat
+
+            // Define interaction zones for doors (x, y, width, height)
+            doorZones.push({ x: 100, y: 200, w: 200, h: 400 }); // Left door
+            doorZones.push({ x: 400, y: 200, w: 200, h: 400 }); // Middle door
+            doorZones.push({ x: 700, y: 200, w: 200, h: 400 }); // Right door
         }
 
         function draw() {
             background(catImage);
             fill(255, 100, 150);
-            ellipse(mouseX, mouseY, circleSize);
+            noStroke();
+
+            // Highlight interaction zones on mouseover
+            for (let zone of catZones) {
+                if (isMouseOverZone(zone)) {
+                    fill(255, 200, 200, 150);
+                    rect(zone.x, zone.y, zone.w, zone.h);
+                }
+            }
+
+            for (let zone of doorZones) {
+                if (isMouseOverZone(zone)) {
+                    fill(200, 255, 200, 150);
+                    rect(zone.x, zone.y, zone.w, zone.h);
+                }
+            }
+        }
+
+        function isMouseOverZone(zone) {
+            return mouseX > zone.x && mouseX < zone.x + zone.w && mouseY > zone.y && mouseY < zone.y + zone.h;
+        }
+
+        function mousePressed() {
+            // Handle mouse click interactions
+            for (let i = 0; i < catZones.length; i++) {
+                if (isMouseOverZone(catZones[i])) {
+                    console.log(`Cat ${i + 1} clicked!`);
+                }
+            }
+
+            for (let i = 0; i < doorZones.length; i++) {
+                if (isMouseOverZone(doorZones[i])) {
+                    console.log(`Door ${i + 1} clicked!`);
+                }
+            }
         }
     </script>
 </body>
