@@ -61,6 +61,9 @@
                     rect(zone.x, zone.y, zone.w, zone.h);
                 }
             }
+
+            // Display mouse coordinates
+            displayCoordinates();
         }
 
         function isMouseOverZone(zone) {
@@ -80,6 +83,13 @@
                     console.log(`Door ${i + 1} clicked!`);
                 }
             }
+        }
+
+        function displayCoordinates() {
+            fill(0);
+            textSize(16);
+            textAlign(LEFT, BOTTOM);
+            text(`x: ${mouseX}, y: ${mouseY}`, 10, height - 10);
         }
     </script>
 </body>
