@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple P5.js Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+</head>
+<body>
+    <script>
+        let circleX = 500;
+        let circleY = 500;
+        let circleSize = 50;
+        let catImage;
+
+        function preload() {
+            catImage = loadImage('cat.png');
+        }
+
+        function setup() {
+            let canvas = createCanvas(1000, 1000);
+            canvas.parent(document.body);
+            canvas.style('display', 'block'); // To ensure the canvas is centered
+        }
+
+        function draw() {
+            background(catImage);
+            fill(255, 100, 150);
+            ellipse(circleX, circleY, circleSize);
+        }
+
+        function keyPressed() {
+            if (keyCode === LEFT_ARROW) {
+                circleX -= 10;
+            } else if (keyCode === RIGHT_ARROW) {
+                circleX += 10;
+            } else if (keyCode === UP_ARROW) {
+                circleY -= 10;
+            } else if (keyCode === DOWN_ARROW) {
+                circleY += 10;
+            }
+        }
+    </script>
+</body>
+</html>
