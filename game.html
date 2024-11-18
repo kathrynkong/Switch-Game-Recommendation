@@ -108,6 +108,8 @@
         }
 
         function mousePressed() {
+            // Reset transformations to ensure coordinates do not shift
+            push();
             // Reset canvas translation to ensure coordinates are correct
             resetMatrix();
             // Handle clicking on choices
@@ -166,6 +168,8 @@
         }
 
         function handleChoice(choice) {
+            // Restore transformations after handling choice
+            pop();
             switch (choice) {
                 case "Play with the Ball":
                     message = "Ginger bats a glowing ball toward you, her eyes sparkling with excitement.";
