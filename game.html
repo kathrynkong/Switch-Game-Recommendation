@@ -109,21 +109,29 @@
 
         function mousePressed() {
             // Handle mouse interactions
+            let choiceHandled = false;
+
             // Handle clicking on choices
             for (let i = 0; i < choices.length; i++) {
                 let choiceY = height / 2 + 100 + i * 40;
                 if (mouseX > width / 2 - 200 && mouseX < width / 2 + 200 && mouseY > choiceY - 20 && mouseY < choiceY + 20) {
                     handleChoice(choices[i]);
+                    choiceHandled = true;
                     return;
                 }
             }
-            // Handle mouse click interactions
+
+            // If choice is handled, do not process further clicks
+            if (choiceHandled) return;
+
+            // Handle mouse click interactions with cat zones
             for (let i = 0; i < catZones.length; i++) {
                 if (isMouseOverZone(catZones[i])) {
                     switch (i) {
                         case 0:
                             message = "Bring me the shimmer of the cosmos, and I shall grant you the Sky Palace's secret.";
                             choices = []; // Clear choices if any
+                            console.log("Clicked Left Cat. No choices available.");
                             break;
                         case 1:
                             message = "Chase the ball, and the Enchanted Forest will open its heart to you.";
@@ -132,27 +140,33 @@
                                 "Ask About the Forest",
                                 "Pet the Cat"
                             ];
+                            console.log("Clicked Middle Cat. Choices available:", choices);
                             break;
                         case 2:
                             message = "The stars whisper their secrets to me. Prove you understand their song, and the Starry Abyss shall be yours.";
                             choices = []; // Clear choices if any
+                            console.log("Clicked Right Cat. No choices available.");
                             break;
                     }
                     messageTimer = 180; // Display message for 3 seconds
                 }
             }
 
+            // Handle mouse click interactions with door zones
             for (let i = 0; i < doorZones.length; i++) {
                 if (isMouseOverZone(doorZones[i])) {
                     switch (i) {
                         case 0:
                             message = "Only those who catch the falling stars may enter the Sky Palace. Dare to chase the light of the heavens?";
+                            console.log("Clicked Left Door.");
                             break;
                         case 1:
                             message = "Follow the glow into the Enchanted Forest. Only those with the courage to uncover the truth may pass.";
+                            console.log("Clicked Middle Door.");
                             break;
                         case 2:
                             message = "Answer the riddle to unlock the Starry Abyss. What shines in the darkness but can never be held?";
+                            console.log("Clicked Right Door.");
                             break;
                     }
                     messageTimer = 180; // Display message for 3 seconds
@@ -164,10 +178,12 @@
             if (showGlowingBall && dist(mouseX, mouseY, glowingBall.x, glowingBall.y) < 25) {
                 points += 10;
                 showGlowingBall = false;
+                console.log("Glowing Ball clicked. Points:", points);
             }
         }
 
         function handleChoice(choice) {
+            console.log("Handling choice:", choice);
             switch (choice) {
                 case "Play with the Ball":
                     message = "Ginger bats a glowing ball toward you, her eyes sparkling with excitement.";
@@ -215,6 +231,7 @@
         }
 
         function displayChoices() {
+            console.log("Displaying choices:", choices);
             for (let i = 0; i < choices.length; i++) {
                 let choiceY = height / 2 + 100 + i * 40;
                 fill(200);
