@@ -109,10 +109,6 @@
 
         function mousePressed() {
             // Handle mouse interactions
-            // Reset transformations to ensure coordinates do not shift
-            
-            // Reset canvas translation to ensure coordinates are correct
-            
             // Handle clicking on choices
             for (let i = 0; i < choices.length; i++) {
                 let choiceY = height / 2 + 100 + i * 40;
@@ -127,6 +123,7 @@
                     switch (i) {
                         case 0:
                             message = "Bring me the shimmer of the cosmos, and I shall grant you the Sky Palace's secret.";
+                            choices = []; // Clear choices if any
                             break;
                         case 1:
                             message = "Chase the ball, and the Enchanted Forest will open its heart to you.";
@@ -138,10 +135,10 @@
                             break;
                         case 2:
                             message = "The stars whisper their secrets to me. Prove you understand their song, and the Starry Abyss shall be yours.";
+                            choices = []; // Clear choices if any
                             break;
                     }
                     messageTimer = 180; // Display message for 3 seconds
-                    choices = [];
                 }
             }
 
@@ -159,6 +156,7 @@
                             break;
                     }
                     messageTimer = 180; // Display message for 3 seconds
+                    choices = []; // Clear choices for doors
                 }
             }
 
@@ -170,8 +168,6 @@
         }
 
         function handleChoice(choice) {
-            // Restore transformations after handling choice
-            
             switch (choice) {
                 case "Play with the Ball":
                     message = "Ginger bats a glowing ball toward you, her eyes sparkling with excitement.";
@@ -187,7 +183,7 @@
                     break;
             }
             messageTimer = 180;
-            choices = [];
+            choices = []; // Clear choices after handling one
         }
 
         function displayCoordinates() {
