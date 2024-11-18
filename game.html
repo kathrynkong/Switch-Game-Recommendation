@@ -49,7 +49,13 @@
         }
 
         function draw() {
+            // Clear background and draw main canvas elements
             background(catImage);
+            
+            // Reset drawing properties to avoid unwanted transformations
+            rectMode(CORNER);
+            textAlign(LEFT, TOP);
+            textSize(24);
             fill(255, 100, 150);
             noStroke();
 
@@ -98,7 +104,6 @@
 
             // Display points
             fill(0);
-            textSize(24);
             textAlign(LEFT, TOP);
             text(`Points: ${points}`, 10, 10);
         }
@@ -109,15 +114,22 @@
 
         function mousePressed() {
             // Handle mouse interactions
+            let choiceHandled = false;
+
             // Handle clicking on choices
             for (let i = 0; i < choices.length; i++) {
                 let choiceY = height / 2 + 100 + i * 40;
                 if (mouseX > width / 2 - 200 && mouseX < width / 2 + 200 && mouseY > choiceY - 20 && mouseY < choiceY + 20) {
                     handleChoice(choices[i]);
+                    choiceHandled = true;
                     return;
                 }
             }
-            // Handle mouse click interactions
+
+            // If choice is handled, do not process further clicks
+            if (choiceHandled) return;
+
+            // Handle mouse click interactions with cat zones
             for (let i = 0; i < catZones.length; i++) {
                 if (isMouseOverZone(catZones[i])) {
                     switch (i) {
@@ -142,6 +154,7 @@
                 }
             }
 
+            // Handle mouse click interactions with door zones
             for (let i = 0; i < doorZones.length; i++) {
                 if (isMouseOverZone(doorZones[i])) {
                     switch (i) {
@@ -217,14 +230,16 @@
         function displayChoices() {
             for (let i = 0; i < choices.length; i++) {
                 let choiceY = height / 2 + 100 + i * 40;
-                fill(200);
                 rectMode(CENTER);
+                fill(200);
                 rect(width / 2, choiceY, 400, 30);
                 fill(0);
                 textSize(20);
                 textAlign(CENTER, CENTER);
                 text(choices[i], width / 2, choiceY);
             }
+            // Reset rectMode to CORNER for other drawings
+            rectMode(CORNER);
         }
     </script>
 </body>
