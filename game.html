@@ -108,6 +108,8 @@
         }
 
         function mousePressed() {
+            // Reset canvas translation to ensure coordinates are correct
+            resetMatrix();
             // Handle clicking on choices
             for (let i = 0; i < choices.length; i++) {
                 let choiceY = height / 2 + 100 + i * 40;
