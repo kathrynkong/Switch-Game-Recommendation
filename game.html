@@ -27,6 +27,8 @@
         let points = 0;
         let glowingBall;
         let showGlowingBall = false;
+        let clickCount = 0;
+        let gameEnded = false;
 
         function preload() {
             catImage = loadImage('cat.png');
@@ -49,9 +51,15 @@
         }
 
         function draw() {
-            // Clear background and draw main canvas elements
+            if (gameEnded) {
+                // Blur the background
+                drawingContext.filter = 'blur(5px)';
+            } else {
+                drawingContext.filter = 'none';
+            }
+
             background(catImage);
-            
+
             // Reset drawing properties to avoid unwanted transformations
             rectMode(CORNER);
             textAlign(LEFT, TOP);
@@ -68,6 +76,7 @@
                     rect(zone.x, zone.y, zone.w, zone.h);
                     displayZoneName(zone.name);
                     catZoneHighlighted = true;
+                    points += 2; // Add 2 points on mouseover
                 }
             }
 
@@ -78,6 +87,7 @@
                         fill(200, 255, 200, 150);
                         rect(zone.x, zone.y, zone.w, zone.h);
                         displayZoneName(zone.name);
+                        points += 2; // Add 2 points on mouseover
                     }
                 }
             }
@@ -106,6 +116,16 @@
             fill(0);
             textAlign(LEFT, TOP);
             text(`Points: ${points}`, 10, 10);
+
+            // End game after 6 clicks
+            if (clickCount >= 6 && !gameEnded) {
+                endGame();
+            }
+
+            // Display end screen if game has ended
+            if (gameEnded) {
+                displayEndScreen();
+            }
         }
 
         function isMouseOverZone(zone) {
@@ -132,6 +152,7 @@
             // Handle mouse click interactions with cat zones
             for (let i = 0; i < catZones.length; i++) {
                 if (isMouseOverZone(catZones[i])) {
+                    clickCount++;
                     switch (i) {
                         case 0:
                             message = "Bring me the shimmer of the cosmos, and I shall grant you the Sky Palace's secret.";
@@ -157,6 +178,7 @@
             // Handle mouse click interactions with door zones
             for (let i = 0; i < doorZones.length; i++) {
                 if (isMouseOverZone(doorZones[i])) {
+                    clickCount++;
                     switch (i) {
                         case 0:
                             message = "Only those who catch the falling stars may enter the Sky Palace. Dare to chase the light of the heavens?";
@@ -177,6 +199,7 @@
             if (showGlowingBall && dist(mouseX, mouseY, glowingBall.x, glowingBall.y) < 25) {
                 points += 10;
                 showGlowingBall = false;
+                clickCount++;
             }
         }
 
@@ -240,6 +263,24 @@
             }
             // Reset rectMode to CORNER for other drawings
             rectMode(CORNER);
+        }
+
+        function endGame() {
+            gameEnded = true;
+        }
+
+        function displayEndScreen() {
+            fill(0, 0, 0, 150);
+            rect(0, 0, width, height);
+
+            fill(255);
+            textSize(48);
+            textAlign(CENTER, CENTER);
+            if (points > 15) {
+                text("Congratulations! You won!", width / 2, height / 2);
+            } else {
+                text("🥲 Try again.", width / 2, height / 2);
+            }
         }
     </script>
 </body>
