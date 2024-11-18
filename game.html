@@ -27,6 +27,7 @@
         let points = 0;
         let glowingBall;
         let showGlowingBall = false;
+        let gameEnded = false;
 
         function preload() {
             catImage = loadImage('cat.png');
@@ -49,9 +50,16 @@
         }
 
         function draw() {
+            if (gameEnded) {
+                // Blur the background
+                drawingContext.filter = 'blur(5px)';
+            } else {
+                drawingContext.filter = 'none';
+            }
+
             // Clear background and draw main canvas elements
             background(catImage);
-            
+
             // Reset drawing properties to avoid unwanted transformations
             rectMode(CORNER);
             textAlign(LEFT, TOP);
@@ -106,6 +114,17 @@
             fill(0);
             textAlign(LEFT, TOP);
             text(`Points: ${points}`, 10, 10);
+
+            // Check if game has ended
+            if (points >= 15 && !gameEnded) {
+                endGame();
+            }
+
+            // Display end screen if game has ended
+            if (gameEnded) {
+                drawingContext.filter = 'none'; // Remove blur for the text
+                displayEndScreen();
+            }
         }
 
         function isMouseOverZone(zone) {
@@ -113,6 +132,8 @@
         }
 
         function mousePressed() {
+            if (gameEnded) return; // Stop interactions if game has ended
+
             // Handle mouse interactions
             let choiceHandled = false;
 
@@ -240,6 +261,20 @@
             }
             // Reset rectMode to CORNER for other drawings
             rectMode(CORNER);
+        }
+
+        function endGame() {
+            gameEnded = true;
+        }
+
+        function displayEndScreen() {
+            fill(0, 0, 0, 150);
+            rect(0, 0, width, height);
+
+            fill(255);
+            textSize(48);
+            textAlign(CENTER, CENTER);
+            text("Congratulations! You won!", width / 2, height / 2);
         }
     </script>
 </body>
