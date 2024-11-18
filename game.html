@@ -29,6 +29,7 @@
         let showGlowingBall = false;
         let clickCount = 0;
         let gameEnded = false;
+        let mouseoverZones = new Set(); // Track zones that have been moused over in the current frame
 
         function preload() {
             catImage = loadImage('cat.png');
@@ -51,8 +52,8 @@
         }
 
         function draw() {
+            // Clear previous filter effects if game hasn't ended
             if (gameEnded) {
-                // Blur the background
                 drawingContext.filter = 'blur(5px)';
             } else {
                 drawingContext.filter = 'none';
@@ -69,14 +70,19 @@
 
             let catZoneHighlighted = false;
 
+            mouseoverZones.clear(); // Reset zones that are being hovered over
+
             // Highlight interaction zones on mouseover and display zone names
             for (let zone of catZones) {
                 if (isMouseOverZone(zone)) {
+                    if (!mouseoverZones.has(zone)) {
+                        points += 2; // Add 2 points once when moused over
+                        mouseoverZones.add(zone); // Track that this zone has been moused over
+                    }
                     fill(255, 200, 200, 150);
                     rect(zone.x, zone.y, zone.w, zone.h);
                     displayZoneName(zone.name);
                     catZoneHighlighted = true;
-                    points += 2; // Add 2 points on mouseover
                 }
             }
 
@@ -84,10 +90,13 @@
             if (!catZoneHighlighted) {
                 for (let zone of doorZones) {
                     if (isMouseOverZone(zone)) {
+                        if (!mouseoverZones.has(zone)) {
+                            points += 2; // Add 2 points once when moused over
+                            mouseoverZones.add(zone); // Track that this zone has been moused over
+                        }
                         fill(200, 255, 200, 150);
                         rect(zone.x, zone.y, zone.w, zone.h);
                         displayZoneName(zone.name);
-                        points += 2; // Add 2 points on mouseover
                     }
                 }
             }
@@ -124,6 +133,8 @@
 
             // Display end screen if game has ended
             if (gameEnded) {
+                // Draw the ending message without blur
+                drawingContext.filter = 'none';
                 displayEndScreen();
             }
         }
